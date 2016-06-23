@@ -1,0 +1,10 @@
+version '0.0.1-SNAPSHOT'
+
+jar {
+    baseName = 'sms-gateway-me-plugin'
+    version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile("com.jayway.jsonpath:json-path:2.2.0")
+}

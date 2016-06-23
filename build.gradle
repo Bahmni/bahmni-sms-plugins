@@ -1,0 +1,28 @@
+subprojects {
+    apply plugin: 'java'
+
+    group = 'org.bahmni.auth'
+
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            name "bahmni-artifactory-snapshot"
+            url "http://bahmnirepo.thoughtworks.com/artifactory/libs-snapshot-local"
+        }
+        maven {
+            name "bahmni-artifactory-release"
+            url "http://bahmnirepo.thoughtworks.com/artifactory/libs-release-local"
+        }
+    }
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter:1.3.5.RELEASE')
+        compile("org.springframework.boot:spring-boot-starter-web:1.3.5.RELEASE")
+        compile("org.bahmni.auth:sms-interface:0.0.1-SNAPSHOT")
+        testCompile('org.springframework.boot:spring-boot-starter-test:1.3.5.RELEASE')
+    }
+}
