@@ -1,5 +1,6 @@
 subprojects {
     apply plugin: 'java'
+    apply plugin: "maven-publish"
 
     group = 'org.bahmni.auth'
 
@@ -16,6 +17,21 @@ subprojects {
         maven {
             name "bahmni-artifactory-release"
             url "http://bahmnirepo.thoughtworks.com/artifactory/libs-release-local"
+        }
+    }
+
+    publishing {
+        publications {
+            myPublication(MavenPublication) {
+                from components.java
+            }
+        }
+
+        repositories {
+            maven {
+                name "bahmni-artifactory"
+                url "http://bahmnirepo.thoughtworks.com/artifactory/libs-${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release'}-local"
+            }
         }
     }
 

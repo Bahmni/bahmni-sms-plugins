@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
+    }
+}
+
+apply plugin: "maven-publish-auth"
+
 version '0.0.1-SNAPSHOT'
 
 jar {
