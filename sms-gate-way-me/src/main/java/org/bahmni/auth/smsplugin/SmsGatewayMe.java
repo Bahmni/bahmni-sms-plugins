@@ -22,8 +22,8 @@ public class SmsGatewayMe implements SmsGateWay {
     private SmsGatewayMeConfig config;
 
     @Override
-    public void sendSMS(String message, String number) {
-        String request = String.format("email=%s&password=%s&message=%s&number=%s&device=%s", config.getEmail(), config.getPassword(), message, number, getDeviceId());
+    public void sendSMS(String countryCode, String mobileNumber, String message) {
+        String request = String.format("email=%s&password=%s&message=%s&number=%s&device=%s", config.getEmail(), config.getPassword(), message, mobileNumber, getDeviceId());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<String> entity = new HttpEntity<>(request, headers);

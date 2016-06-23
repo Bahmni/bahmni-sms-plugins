@@ -34,7 +34,7 @@ public class SmsGatewayMeTest {
 
     @Test
     public void shouldSendMessageToSmsGateWayWithUserCredentials() {
-        String request = String.format("email=%s&password=%s&message=%s&number=%s&device=%s", email, password, "Hello", "1234", "10");
+        String request = String.format("email=%s&password=%s&message=%s&number=%s&device=%s", email, password, "OTP", "1234", "10");
         String deviceUrl = String.format(deviceListUrl + "?email=%s&password=%s", email, password);
         String deviceDetail = "{ result : { data: [ {'id':'10'}]}}";
         HttpHeaders headers = new HttpHeaders();
@@ -44,7 +44,7 @@ public class SmsGatewayMeTest {
         when(config.getEmail()).thenReturn("abcd@gmail.com");
         when(config.getPassword()).thenReturn("abcpass");
 
-        smsGatewayMe.sendSMS("Hello", "1234");
+        smsGatewayMe.sendSMS("91", "1234", "OTP");
 
         verify(restOperations, times(1)).getForObject(eq(deviceUrl), eq(String.class));
         verify(restOperations, times(1)).postForObject(eq(sendMessageUrl), eq(entity), eq(String.class));
