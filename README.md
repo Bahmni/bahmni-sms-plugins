@@ -10,7 +10,7 @@ The build tool used in the project is gradle.
 Steps required for installing a plugin can be found in the [web app repository's](https://github.com/Bahmni/two-factor-auth) README section
 
 #sms-gate-way-me plugin
-This plugin enables you to use the third party SMS service provider https://smsgateway.me/. Create an account in the website and download the android app in your mobile phone. The app asks for the email and password to register your device with the website. Whenever an SMS is sent to the service provider, it will be pushed to the Android app in your mobile, which actually sends the SMS from your device. To use this plugin in Bahmni, you have to provide email and password in the file named `SmsGatewayMe.conf` located at `/home/bahmni/.bahmni-security/`.
+This plugin enables you to use the third party SMS service provider https://smsgateway.me/. Create an account in the website and download the android app in your mobile phone. The app asks for the email and password to register your device with the website. Whenever an SMS is sent to the service provider, it will be pushed to the Android app in your mobile, which actually sends the SMS from your device. To use this plugin in Bahmni, download the `jar` file located at [bahmni maven repository](http://bahmnirepo.thoughtworks.com/artifactory/libs-snapshot-local/org/bahmni/auth/sms-gate-way-me/) and you have to provide email and password in the file named `SmsGatewayMe.conf` located at `/home/bahmni/.bahmni-security/`.
 
 The format is:
 ```
