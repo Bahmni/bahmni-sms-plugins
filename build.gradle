@@ -29,7 +29,7 @@ subprojects {
         repositories {
             maven {
                 name "bahmni-artifactory"
-                url "http://repo.mybahmni.org.s3.amazonaws.com/artifactory/${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release'}"
+                url "s3://repo.mybahmni.org/artifactory/${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release'}"
             }
         }
     }
@@ -38,6 +38,7 @@ subprojects {
         compile('org.springframework.boot:spring-boot-starter:1.3.5.RELEASE')
         compile("org.springframework.boot:spring-boot-starter-web:1.3.5.RELEASE")
         compile("org.bahmni.auth:sms-interface:0.0.1-SNAPSHOT")
+        compile('org.kuali.maven.wagons:maven-s3-wagon:1.1.9')
         testCompile('org.springframework.boot:spring-boot-starter-test:1.3.5.RELEASE')
     }
 }
