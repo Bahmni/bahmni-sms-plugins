@@ -30,6 +30,10 @@ subprojects {
             maven {
                 name "bahmni-artifactory"
                 url "s3://repo.mybahmni.org/artifactory/${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release'}"
+  		credentials(AwsCredentials) {
+                accessKey System.getenv('AWS_ACCESS_KEY_ID')
+                secretKey System.getenv('AWS_SECRET_ACCESS_KEY')
+         }
             }
         }
     }
