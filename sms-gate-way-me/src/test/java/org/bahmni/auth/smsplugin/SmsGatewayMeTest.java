@@ -15,13 +15,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
+
 @RunWith(MockitoJUnitRunner.class)
 public class SmsGatewayMeTest {
 
-    private String sendMessageUrl = "https://smsgateway.me/api/v3/messages/send";
-    private String deviceListUrl = "https://smsgateway.me/api/v3/devices";
-    private String email = "abcd@gmail.com";
-    private String password = "abcpass";
+    private String sendMessageUrl = "https://smsgateway.me/api/v4/message/send";
+    private String deviceListUrl = "https://smsgateway.me/api/v4/device/search";
 
     @Mock
     private RestOperations restOperations;
@@ -33,21 +32,35 @@ public class SmsGatewayMeTest {
     private SmsGatewayMe smsGatewayMe;
 
     @Test
-    public void shouldSendMessageToSmsGateWayWithUserCredentials() {
-        String request = String.format("email=%s&password=%s&message=%s&number=%s&device=%s", email, password, "OTP", "1234", "10");
-        String deviceUrl = String.format(deviceListUrl + "?email=%s&password=%s", email, password);
-        String deviceDetail = "{ result : { data: [ {'id':'10'}]}}";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        HttpEntity<String> entity = new HttpEntity<>(request, headers);
-        when(restOperations.getForObject(deviceUrl, String.class)).thenReturn(deviceDetail);
-        when(config.getEmail()).thenReturn("abcd@gmail.com");
-        when(config.getPassword()).thenReturn("abcpass");
+    public void shouldSendMessageToSmsGateWayWithUserCredentials(){
+
+        String requestForSendMessageUrl = "[{" +
+                " \"message\":OTP," +
+                " \"phone_number\":1234," +
+                " \"device_id\":10" +
+                "}]";
+        String requestForDeviceListUrl = String.format(deviceListUrl);
+
+        String deviceDetail = "{ results : [{'id':10}]}";
+
+        HttpHeaders headersForSendMessageUrl = new HttpHeaders();
+        headersForSendMessageUrl.set("Authorization", "some token");
+        headersForSendMessageUrl.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpHeaders headersForDeviceListUrl = new HttpHeaders();
+        headersForDeviceListUrl.set("Authorization", "some token");
+        headersForDeviceListUrl.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<String> entityForSendMessageUrl = new HttpEntity<>(requestForSendMessageUrl, headersForSendMessageUrl);
+        HttpEntity<String> entityForDeviceListUrl = new HttpEntity<>(requestForDeviceListUrl, headersForDeviceListUrl);
+
+        when(restOperations.postForObject(deviceListUrl, entityForDeviceListUrl, String.class)).thenReturn(deviceDetail);
+        when(config.getToken()).thenReturn("some token");
 
         smsGatewayMe.sendSMS("91", "1234", "OTP");
 
-        verify(restOperations, times(1)).getForObject(eq(deviceUrl), eq(String.class));
-        verify(restOperations, times(1)).postForObject(eq(sendMessageUrl), eq(entity), eq(String.class));
+        verify(restOperations, times(1)).postForObject(eq(deviceListUrl), eq(entityForDeviceListUrl), eq(String.class));
+        verify(restOperations, times(1)).postForObject(eq(sendMessageUrl), eq(entityForSendMessageUrl), eq(String.class));
     }
 
 }

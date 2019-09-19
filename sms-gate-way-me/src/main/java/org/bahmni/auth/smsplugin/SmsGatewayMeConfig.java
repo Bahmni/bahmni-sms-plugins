@@ -31,11 +31,7 @@ public class SmsGatewayMeConfig {
         }
     }
 
-    public String getEmail() {
-        return props.getProperty("email");
-    }
-
-    public String getPassword() {
-        return props.getProperty("password");
+    public String getToken() {
+        return props.getProperty("token");
     }
 }
